@@ -1,0 +1,13 @@
+
+<!-- Placeholder code to see our events -->
+<% for event in @events %>
+		<div>
+		<%= event.event_name + " is scheduled over the following days: \n" %>
+		<% for day in event.days %>
+		<p>
+			<%= '' + day.cal_day.mon.to_s + '/' + day.cal_day.mday.to_s + '/' + day.cal_day.year.to_s + "\n"%>
+		</p>
+		<%end%>
+		</div>
+<%end%>
+

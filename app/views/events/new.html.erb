@@ -1,0 +1,26 @@
+ <!-- Place holder code to put in some of the basic fields we'll need to pass to the controller. We need the event name, start time, end time, and an array with dates. -->
+
+ <%= form_for(@event) do |form| %>
+    <%= form.label "What_are_you_planning?" %>
+    <%= form.text_field :event_name %>
+    <br><br>
+    <%= form.label "Start_Time" %>
+    <%= form.time_field :start_time %>
+    <br><br>
+    <%= form.label "End_Time" %>
+    <%= form.time_field :end_time%>
+    <br><br>
+    
+<!-- This is a placeholder. We'll need some javascript to take the selected dates from our calendar object and set our hidden_field_tag value to said dates.-->
+    <%= hidden_field_tag 'dates_array' %>
+    <%= form.submit "Post" %>
+    <script>
+    	dates = ["11/11/2001", "11/02/2002"]
+    	document.getElementById('dates_array').value = dates
+    </script>
+   
+<% end %> 
+
+
+
+
