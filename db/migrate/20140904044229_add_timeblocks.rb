@@ -3,6 +3,7 @@ class AddTimeblocks < ActiveRecord::Migration
   	create_table :timeblocks do |t|
   		t.integer :participant_id
   		t.integer :time_id
+  		t.date :cal_day
   	end
   end
 end

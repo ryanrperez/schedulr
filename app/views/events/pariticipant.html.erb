@@ -1,0 +1,20 @@
+ <!-- Place holder code to put in some of the basic fields we'll need to pass to the controller. We need the event name, start time, end time, and an array with dates. -->
+
+ <%= form_for(@participant) do |form| %>
+    <%= form.label "What is your name" %>
+    <%= form.text_field :name %>
+
+    <br><br>
+    
+
+    <%= hidden_field_tag 'availability' %>
+    <%= form.submit "Post" %>
+    <script>
+    	// TODO: Add dictionary containing days and times.
+        // Dictionary = {day 1 => [start_time1, start_time2, etc], day2 => [..]}
+        // Currently passing this through as a string, need to pass through as json.
+
+        avail = {}
+    	document.getElementById('availability').value = avail
+    </script>
+<% end %> 

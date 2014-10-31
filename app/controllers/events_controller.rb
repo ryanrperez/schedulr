@@ -13,10 +13,8 @@ def create()
 	@event = Event.create(:event_name => params[:event][:event_name],
 		:start_time => params[:event][:start_time], :end_time => params[:event][:end_time])
 	# for each date passed in, we'll make a new day and add it to the event.dates
-	
 
 	addDates()
-	
 	if(@event.save)
 		# place holder code to know whether we have successfully saved the event. We'll need to to validation
 		flash.notice = "woot you created a new event with event name " + @event.event_name
@@ -29,9 +27,7 @@ def create()
 end
 
 def addDates()
-	puts "hello"
-dates = params[:dates_array]
-	#make days 
+	dates = params[:dates_array]
 	start_index = 0;
 	while true
 		last_day = false;
@@ -48,9 +44,8 @@ dates = params[:dates_array]
 			break
 		end
 		@event.days.push(day)
+
 	end
-
-
 end
 
 
