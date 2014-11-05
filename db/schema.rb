@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20140915215418) do
   create_table "timeblocks", force: true do |t|
     t.integer "participant_id"
     t.integer "time_id"
+    t.date    "cal_day"
   end
 
 end

@@ -1,10 +1,12 @@
 class EventsController < ApplicationController 
 
 def index()
+	@title = "Schedulr";
 	@events = Event.find(:all)
 end
 
 def new()
+	@title = "Schedulr";
 	@event = Event.new
 end
 
@@ -16,7 +18,7 @@ def create()
 
 	addDates()
 	if(@event.save)
-		# place holder code to know whether we have successfully saved the event. We'll need to to validation
+		# place holder code to know whether we have successfully saved the event. We'll need to do validation
 		flash.notice = "woot you created a new event with event name " + @event.event_name
 	else
 		flash.notice = "failure"
@@ -25,6 +27,20 @@ def create()
 	# We'll redirect to whatever page shows the participant view c
 	redirect_to event_path("new")
 end
+
+def show()
+	# Currently checking off auto id --> we need to hash this
+	if(!Event.exists?(params[:id]))
+		flash.notice = "That is not a valid User ID"
+ 		redirect_to events_path
+		
+	else
+		@event = Event.find(params[:id])
+					@title = @event.event_name
+ 	end
+ 	@participant = Participant.new
+end
+
 
 def addDates()
 	dates = params[:dates_array]
@@ -47,6 +63,8 @@ def addDates()
 
 	end
 end
+
+
 
 
 

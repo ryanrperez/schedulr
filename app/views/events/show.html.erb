@@ -1,0 +1,43 @@
+
+<div>
+	<%= @event.event_name + " is scheduled over the following days: \n" %>
+	<% for day in @event.days %>
+	<p>
+		<%= '' + day.cal_day.mon.to_s + '/' + day.cal_day.mday.to_s + '/' + day.cal_day.year.to_s + "\n"%>
+	</p>
+	<%end%>
+</div>
+
+<!-- We need to have this form submit after a user has put in their availability and clicks some button acknowledging that they're ready to submit their free time slots -->
+
+<div> Participants:
+<% for participant in @event.participants %>
+        <p>
+            <%= participant.name + " is available at:"%>
+            <% for time in participant.timeblocks %>
+            	<%= time.cal_day.to_s + " at " + time.time_id.to_s + ";" %>
+            <%end%>
+        </p>
+<%end%>
+</div>
+
+
+ <%= form_for(@participant) do |form| %>
+    <%= form.label "What is your name" %>
+    <%= form.text_field :name %>
+
+    <br><br>
+    
+    <%= hidden_field_tag 'event_id', :value => @event.id.to_s %>
+
+    <%= hidden_field_tag 'availability' %>
+    <%= form.submit "Post" %>
+    <script>
+    	// TODO: Add dictionary containing days and times.
+        // Dictionary = {day 1 => [start_time1, start_time2, etc], day2 => [..]}
+        // Currently passing this through as a string, need to pass through as json.
+
+        avail = {"11/03/2014": [1,2,3], "11/04/2014": [2,3,4]}
+    	document.getElementById('availability').value = avail
+    </script>
+<% end %> 

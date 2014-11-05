@@ -55,4 +55,6 @@ Schedulr::Application.routes.draw do
   #   end
 
   resources :events
+  resources :participants
+
 end
