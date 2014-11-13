@@ -11,15 +11,37 @@
     <%= form.time_field :end_time%>
     <br><br>
     
-<!-- This is a placeholder. We'll need some javascript to take the selected dates from our calendar object and set our hidden_field_tag value to said dates.-->
     <%= hidden_field_tag 'dates_array' %>
-    <%= form.submit "Post" %>
+<% end %>
+    
+    <!-- Button used to submit form and ajax request -->
+    <button id="submit" onclick="addEvent()"> Schedule </button>
+
     <script>
-    	dates = ["11/11/2001", "11/02/2002"]
-    	document.getElementById('dates_array').value = dates
+
+        function addEvent(){
+            var dates = eventDates()
+            document.getElementById('dates_array').value = JSON.stringify(dates);
+            $.ajax({
+                type: "POST",
+                url: "/events",
+                complete: function(){
+                    $("#new_event").submit(); //submit the form after ajax completes
+                }
+            });
+        }
+
+// Add functionality for getting dates from calendar that user interfaces with 
+        function eventDates(){
+            dates = ["11/11/2001", "11/02/2002", "12/31/2015"]
+            return dates;
+        }
+
     </script>
    
-<% end %> 
+
+
+  
 
 
 

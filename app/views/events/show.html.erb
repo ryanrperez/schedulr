@@ -8,7 +8,6 @@
 	<%end%>
 </div>
 
-<!-- We need to have this form submit after a user has put in their availability and clicks some button acknowledging that they're ready to submit their free time slots -->
 
 <div> Participants:
 <% for participant in @event.participants %>
@@ -21,6 +20,7 @@
 <%end%>
 </div>
 
+<!-- Form to add a new participant -->
 
  <%= form_for(@participant) do |form| %>
     <%= form.label "What is your name" %>
@@ -28,16 +28,39 @@
 
     <br><br>
     
-    <%= hidden_field_tag 'event_id', :value => @event.id.to_s %>
+    <%= hidden_field_tag 'event_id', @event.id %>
 
     <%= hidden_field_tag 'availability' %>
-    <%= form.submit "Post" %>
-    <script>
-    	// TODO: Add dictionary containing days and times.
-        // Dictionary = {day 1 => [start_time1, start_time2, etc], day2 => [..]}
-        // Currently passing this through as a string, need to pass through as json.
 
-        avail = {"11/03/2014": [1,2,3], "11/04/2014": [2,3,4]}
-    	document.getElementById('availability').value = avail
-    </script>
 <% end %> 
+
+<!-- Button to submit form and ajax request -->
+
+    <button id="submit" onclick="addParticipant()"> All Done! </button>
+
+<!-- Script to turn javascript dictionary to string and post to create a new participant with specified availability -->
+    <script>   
+        function addParticipant(){
+            var avail = participantAvailability()
+            
+            document.getElementById('availability').value = JSON.stringify(avail);
+            $.ajax({
+                type: "POST",
+                url: "/participants",
+                complete: function(){
+                    $("#new_participant").submit(); //submit the form after ajax completes
+                }
+            });
+        }
+
+
+    // Function that returns the participant's availability as specified on the calendar
+
+        function participantAvailability(){
+            var avail = {};
+            avail['11/03/2014'] = [1,2,3];
+            avail['11/09/2015'] = [2,3,5];
+            return avail;
+        }
+
+    </script>
